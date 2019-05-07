@@ -33,7 +33,7 @@ class SmsTest extends TestCase
         $param = ['PhoneNumbers' => '18390551050', 'SignName' => '【test】', 'TemplateCode' => 'SMT_00001'];
         try {
             $res = $sms->send($param);
-            $this->assertIsArray($res);
+            $this->assertArrayHasKey('Code', $res);
         } catch (\Exception $e) {
             $this->expectException($e->getMessage());
         }
@@ -60,7 +60,7 @@ class SmsTest extends TestCase
         $param = ['mobile' => '18390551050', 'content' => 1122];
         try {
             $res = $sms->send($param);
-            $this->assertIsInt(0, $res);
+            $this->assertNotEmpty($res);
         } catch (\Exception $e) {
             $this->expectException($e->getMessage());
         }
