@@ -33,10 +33,10 @@ class Aliyun implements SmsInterface
     public function __construct(array $config)
     {
         if (!array_key_exists('AccessKeyId', $config) || empty($config['AccessKeyId'])) {
-            throw new InvalidArgumentException('miss field: AccessKeyId');
+            throw new InvalidArgumentException('miss config: AccessKeyId');
         }
         if (!array_key_exists('AccessKeySecret', $config) || empty($config['AccessKeySecret'])) {
-            throw new InvalidArgumentException('miss field: AccessKeySecret');
+            throw new InvalidArgumentException('miss config: AccessKeySecret');
         }
         $this->AccessKeyId = $config['AccessKeyId'];
         $this->AccessKeySecret = $config['AccessKeySecret'];

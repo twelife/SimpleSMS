@@ -12,11 +12,13 @@
     "minimum-stability": "dev",
     "require": {
         "ext-curl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "phpunit/phpunit": "^8.2@dev"
     },
     "autoload": {
         "psr-4": {
-            "Twelife\\sms\\": "src"
+            "Twelife\\sms\\": "src",
+            "Twelife\\sms\\tests\\": "tests"
         }
     }
 }
