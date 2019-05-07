@@ -1,0 +1,22 @@
+{
+    "name": "twelife/sms",
+    "description": "sms collection",
+    "type": "libray",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "smile",
+            "email": "twelife@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Twelife\\sms\\": "src"
+        }
+    }
+}
