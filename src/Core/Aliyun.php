@@ -24,6 +24,7 @@ class Aliyun implements SmsInterface
 
     private $AccessKeyId;
     private $AccessKeySecret;
+    private $SignName;
 
     /**
      * Aliyun constructor.
@@ -40,6 +41,7 @@ class Aliyun implements SmsInterface
         }
         $this->AccessKeyId = $config['AccessKeyId'];
         $this->AccessKeySecret = $config['AccessKeySecret'];
+        $this->SignName = isset($config['SignName']) ? $config['SignName'] : '';
     }
 
     /**
@@ -62,7 +64,7 @@ class Aliyun implements SmsInterface
             'Timestamp' => gmdate("Y-m-d\TH:i:s\Z"),
             'Version' => self::VERSION,
             'PhoneNumbers' => $data['PhoneNumbers'],
-            'SignName' => $data['SignName'],
+            'SignName' => isset($data['SignName']) ? $data['SignName'] : $this->SignName,
             'TemplateCode' => $data['TemplateCode'],
             'TemplateParam' => isset($data['TemplateParam']) ? $data['TemplateParam'] : '',
             'OutId' => isset($data['OutId']) ? $data['OutId'] : '',
@@ -80,7 +82,7 @@ class Aliyun implements SmsInterface
      */
     private function checkParam(array $data)
     {
-        $param = ['PhoneNumbers', 'SignName', 'TemplateCode'];
+        $param = ['PhoneNumbers', 'TemplateCode'];
         foreach ($param as $k => $v) {
             if (!array_key_exists($v, $data) || empty($data[$v])) {
                 throw new InvalidArgumentException(__FUNCTION__ . '() miss params: ' . $v);
@@ -88,6 +90,15 @@ class Aliyun implements SmsInterface
         }
         if (!sth::checkPhone($data['PhoneNumbers'])) {
             throw new InvalidArgumentException(__FUNCTION__ . '() miss params: PhoneNumbers is not mobile');
+        }
+        if (!isset($data['SignName'])) {
+            if (empty($this->SignName)) {
+                throw new InvalidArgumentException(__FUNCTION__ . '() miss config: SignName not exists');
+            }
+        } else {
+            if (empty($data['SignName'])) {
+                throw new InvalidArgumentException(__FUNCTION__ . '() miss params: SignName');
+            }
         }
     }
 

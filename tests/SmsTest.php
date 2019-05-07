@@ -15,7 +15,7 @@ class SmsTest extends TestCase
 {
     public function testAliyun()
     {
-        $config = ['class' => 'aliyun', 'AccessKeyId' => 123456, 'AccessKeySecret' => 777];
+        $config = ['class' => 'aliyun', 'AccessKeyId' => 123456, 'AccessKeySecret' => 777, 'SignName' => '【test】'];
         try {
             $sms = new sms($config);
             $this->assertInstanceOf(sms::class, $sms);
@@ -30,7 +30,7 @@ class SmsTest extends TestCase
      */
     public function testAliyunSend($sms)
     {
-        $param = ['PhoneNumbers' => '18390551050', 'SignName' => '【test】', 'TemplateCode' => 'SMT_00001'];
+        $param = ['PhoneNumbers' => '18390551050', 'TemplateCode' => 'SMT_00001'];
         try {
             $res = $sms->send($param);
             $this->assertArrayHasKey('Code', $res);

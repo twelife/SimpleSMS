@@ -9,7 +9,8 @@ return [
     'aliyun' => [
         'class' => 'aliyun',
         'AccessKeyId' => 'xxx',
-        'AccessKeySecret' => 'xxx'
+        'AccessKeySecret' => 'xxx',
+        'SignName' => 'xx',
     ],
     // 短信宝
     'smsbao' => [
