@@ -53,7 +53,7 @@ class Smsbao implements SmsInterface
             'u' => $this->username,
             'p' => md5($this->password),
             'm' => $data['mobile'],
-            'c' => urlencode($data['content'])
+            'c' => $data['content']
         ];
         $api .= '?' . http_build_query($arr);
         $result = file_get_contents($api);
