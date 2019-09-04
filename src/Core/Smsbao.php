@@ -51,7 +51,7 @@ class Smsbao implements SmsInterface
         $api = 'http://api.smsbao.com/sms';
         $arr = [
             'u' => $this->username,
-            'p' => $this->password,
+            'p' => md5($this->password),
             'm' => $data['mobile'],
             'c' => urlencode($data['content'])
         ];
