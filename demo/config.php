@@ -18,4 +18,10 @@ return [
         'username' => 'xxx',
         'password' => 'xxx',
     ],
+    // 凌凯
+    'lingkai' => [
+        'class' => 'lingkai',
+        'username' => 'xxx',
+        'password' => 'xxx',
+    ],
 ];

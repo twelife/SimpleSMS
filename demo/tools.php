@@ -79,6 +79,11 @@ class tools
                     return $this->info($result);
                 }
                 break;
+            case 'lingkai':
+                if ($result <= 0) {
+                    return $this->info($result);
+                }
+                break;
             default:
                 return $this->info($this->config['class'] . ' sms is not deal result');
                 break;

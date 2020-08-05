@@ -30,7 +30,7 @@ class SmsTest extends TestCase
      */
     public function testAliyunSend($sms)
     {
-        $param = ['PhoneNumbers' => '18390551050', 'TemplateCode' => 'SMT_00001'];
+        $param = ['PhoneNumbers' => '18390551234', 'TemplateCode' => 'SMT_00001'];
         try {
             $res = $sms->send($param);
             $this->assertArrayHasKey('Code', $res);
@@ -57,7 +57,7 @@ class SmsTest extends TestCase
      */
     public function testSmsbaoSend($sms)
     {
-        $param = ['mobile' => '18390551050', 'content' => 1122];
+        $param = ['mobile' => '18390551234', 'content' => 1122];
         try {
             $res = $sms->send($param);
             $this->assertNotEmpty($res);
@@ -65,5 +65,31 @@ class SmsTest extends TestCase
             $this->expectException($e->getMessage());
         }
     }
-
+    
+    public function testLingkai()
+    {
+        $config = ['class' => 'lingkai', 'username' => 'smile', 'password' => 'test'];
+        try {
+            $sms = new sms($config);
+            $this->assertInstanceOf(sms::class, $sms);
+            return $sms;
+        } catch (\Exception $e) {
+            $this->expectException($e->getMessage());
+        }
+    }
+    
+    /**
+     * @depends testSmsbao
+     * @param $sms
+     */
+    public function testLingkaiSend($sms)
+    {
+        $param = ['mobile' => '18390551234', 'content' => 1122];
+        try {
+            $res = $sms->send($param);
+            $this->assertNotEmpty($res);
+        } catch (\Exception $e) {
+            $this->expectException($e->getMessage());
+        }
+    }
 }
