@@ -46,6 +46,9 @@ class Aliyun implements SmsInterface
     public function send(array $data)
     {
         $this->checkParam($data);
+        if (!isset($data['SignName'])) {
+            $data['SignName'] = $this->SignName;
+        }
         AlibabaCloud::accessKeyClient($this->AccessKeyId, $this->AccessKeySecret)
             ->regionId('cn-hangzhou')
             ->asDefaultClient();
