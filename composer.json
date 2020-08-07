@@ -15,7 +15,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "ext-iconv": "*",
-        "alibabacloud/client": "dev-master"
+        "alibabacloud/client": "1.5.29"
     },
     "require-dev": {
         "phpunit/phpunit": "~5.0"
