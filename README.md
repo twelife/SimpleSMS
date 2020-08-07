@@ -1,7 +1,5 @@
 <h1 align="center">简易短信聚合</h1>
 
-[![Build Status](https://travis-ci.com/twelife/SimpleSMS.svg?token=gemkF6FHspmCdN1qLyjm&branch=master)](https://travis-ci.com/twelife/SimpleSMS)
-
 ## 说明
 
 为了方便项目中快速调用短信发送功能，对短信做了一个整合，目前仅包含：`阿里云短信`、`短信宝`

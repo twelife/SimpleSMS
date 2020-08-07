@@ -70,8 +70,8 @@ class tools
     {
         switch ($this->config['class']) {
             case 'aliyun':
-                if (strtoupper($result['Code']) != 'OK') {
-                    return $this->info($result['Message'], 1, $result);
+                if ($result['code'] !== 0) {
+                    return $this->info($result['msg'], 1, $result);
                 }
                 break;
             case 'smsbao':

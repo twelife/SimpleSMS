@@ -8,9 +8,9 @@ return [
     // 阿里云
     'aliyun' => [
         'class' => 'aliyun',
-        'AccessKeyId' => 'xxx',
-        'AccessKeySecret' => 'xxx',
-        'SignName' => 'xx',
+        'AccessKeyId' => '',
+        'AccessKeySecret' => '',
+        'SignName' => '',
     ],
     // 短信宝
     'smsbao' => [

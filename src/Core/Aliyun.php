@@ -8,20 +8,13 @@
 
 namespace Twelife\sms\Core;
 
+use AlibabaCloud\Client\AlibabaCloud;
 use Twelife\sms\Contracts\SmsInterface;
 use Twelife\sms\Exception\InvalidArgumentException;
 use Twelife\sms\Traits\sth;
 
 class Aliyun implements SmsInterface
 {
-    const URL = 'http://dysmsapi.aliyuncs.com/';
-    const ACTION = 'SendSms';
-    const FORMAT = 'json';
-    const REGIONID = 'cn-hangzhou';
-    const SIGNATUREMETHOD = 'HMAC-SHA1';
-    const SIGNATUREVERSION = '1.0';
-    const VERSION = '2017-05-25';
-
     private $AccessKeyId;
     private $AccessKeySecret;
     private $SignName;
@@ -53,25 +46,18 @@ class Aliyun implements SmsInterface
     public function send(array $data)
     {
         $this->checkParam($data);
-        $param = [
-            'AccessKeyId' => $this->AccessKeyId,
-            'Action' => self::ACTION,
-            'Format' => self::FORMAT,
-            'RegionId' => self::REGIONID,
-            'SignatureMethod' => self::SIGNATUREMETHOD,
-            'SignatureNonce' => uniqid(),
-            'SignatureVersion' => self::SIGNATUREVERSION,
-            'Timestamp' => gmdate("Y-m-d\TH:i:s\Z"),
-            'Version' => self::VERSION,
-            'PhoneNumbers' => $data['PhoneNumbers'],
-            'SignName' => isset($data['SignName']) ? $data['SignName'] : $this->SignName,
-            'TemplateCode' => $data['TemplateCode'],
-            'TemplateParam' => isset($data['TemplateParam']) ? $data['TemplateParam'] : '',
-            'OutId' => isset($data['OutId']) ? $data['OutId'] : '',
-        ];
-        $sign = $this->buildSignature($param);
-        $param['Signature'] = $sign;
-        $result = sth::curl(self::URL . '?' . http_build_query($param));
+        AlibabaCloud::accessKeyClient($this->AccessKeyId, $this->AccessKeySecret)
+            ->regionId('cn-hangzhou')
+            ->asDefaultClient();
+        $result = AlibabaCloud::rpc()
+            ->product('Dysmsapi')
+            // ->scheme('https') // https | http
+            ->version('2017-05-25')
+            ->action('SendSms')
+            ->method('POST')
+            ->host('dysmsapi.aliyuncs.com')
+            ->options(['query' => $data])
+            ->request();
         return $result;
     }
 
@@ -100,19 +86,5 @@ class Aliyun implements SmsInterface
                 throw new InvalidArgumentException(__FUNCTION__ . '() miss params: SignName');
             }
         }
-    }
-
-    /**
-     * 生成签名
-     * @param array $param 签名数组
-     * @return string
-     */
-    private function buildSignature(array $param)
-    {
-        ksort($param);
-        $str = 'GET&%2F&' . urlencode(http_build_query($param, null, '&', PHP_QUERY_RFC3986));
-        $sign = base64_encode(hash_hmac('sha1', $str, $this->AccessKeySecret . '&', true));
-
-        return $sign;
     }
 }
